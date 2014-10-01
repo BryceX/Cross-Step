@@ -1,16 +1,39 @@
 ﻿#include "AIE.h"
 #include <iostream>
+
 int screenWidth = 900;
 int screenHeight = 900;
 //float GetDeltaTime();
 char playerHealthString[10];
-int playerHealth = 3;
+int playerHealth = 3000;
 float gameTime = 0;
 char gameOverText[10] = "Game Over";
+unsigned int leftCap;
+unsigned int rightCap;
+unsigned int topCap;
+unsigned int bottomCap;
+void MovementCap(float objWidth, float objHeight)
+{
+	topCap = screenHeight - objHeight*.5;
+	bottomCap = 0 + objHeight*.5;
+	leftCap = screenWidth*.125 + objWidth*.5;
+	rightCap = screenWidth*.875 - objWidth*.5;
+}
+/*void ShootBullet(float objBullet)
+{
+if (IsKeyDown(32))
+{
+MoveSprite
+DrawSprite
+
+}
+}*/
+
+
 enum GAMESTATE
 {
 	MAINMENU,
-	GAMESTART,
+	GAMEPLAY,
 	GAMEOVER,
 };
 
@@ -27,12 +50,53 @@ struct Player
 	float playerWidth = screenWidth*.05;
 	float playerHeight = screenHeight*.05;
 	unsigned int playerSprite;
+	unsigned int upKey;
+	unsigned int downKey;
+	unsigned int leftKey;
+	unsigned int rightKey;
 	float playerUpperBoundary;
 	float playerLowerBoundary;
 	float playerLeftBoundary;
 	float playerRightBoundary;
 	float timeWhenLastDamaged;
 	float invulTime = 2;
+
+	void Move()
+	{
+
+		if (IsKeyDown(upKey))
+		{
+			playerY += screenHeight*.5*GetDeltaTime();
+			if (playerY > screenHeight - playerHeight*.5)
+			{
+				playerY = screenHeight - playerHeight*.5;
+			}
+		}
+		if (IsKeyDown(downKey))
+		{
+			playerY -= screenHeight*.5*GetDeltaTime();
+			if (playerY < 0 + playerHeight*.5)
+			{
+				playerY = 0 + playerHeight*.5;
+			}
+		}
+		if (IsKeyDown(leftKey))
+		{
+			playerX -= screenWidth*.5*GetDeltaTime();
+			if (playerX < screenWidth*.125 + playerWidth*.5)
+			{
+				playerX = screenWidth*.125 + playerWidth*.5;
+			}
+		}
+		if (IsKeyDown(rightKey))
+		{
+			playerX += screenWidth*.5*GetDeltaTime();
+			if (playerX > screenWidth*.875 - playerWidth*.5)
+			{
+				playerX = screenWidth*.875 - playerWidth*.5;
+			}
+		}
+	}
 
 
 
@@ -62,76 +126,64 @@ struct Bullet
 {
 	float bulletX;
 	float bulletY;
-	float bulletWidth = screenWidth*.001;
-	float bulletHeight = screenHeight*.001;
+	float bulletWidth = screenWidth*.01;
+	float bulletHeight = screenHeight*.02;
 	unsigned int bulletSprite;
+	float bulletTestY;
 };
 
-int main( int argc, char* argv[] )
-{	
-    Initialise(900, 900, false, "Cross Step");
-    SetBackgroundColour(SColour(0, 0, 0, 255));
-	
+int main(int argc, char* argv[])
+{
+	Initialise(900, 900, false, "Cross Step");
+	SetBackgroundColour(SColour(0, 0, 0, 255));
+
 
 	Background stage1;
-	stage1.stageSprite = CreateSprite("./images/stage1background.png", screenWidth*.75, screenHeight * 3, true);
+	stage1.stageSprite = CreateSprite("./images/stage1background.png", screenWidth*.75, screenHeight * 4, true);
 	stage1.backgroundYSpeed = screenHeight*1.5;
-	
+
 	Player lyn;
 	lyn.playerSprite = CreateSprite("./images/lyn.png", lyn.playerWidth, lyn.playerHeight, true);
 	lyn.playerX = screenWidth*.5;
-	lyn.playerY = screenHeight*.05;	
+	lyn.playerY = screenHeight*.05;
+	lyn.upKey = 'W';
+	lyn.downKey = 'S';
+	lyn.leftKey = 'A';
+	lyn.rightKey = 'D';
+	//set all my keys
 
 	Enemy bandit1;
 	bandit1.enemySprite = CreateSprite("./images/enemy1.png", bandit1.enemyWidth, bandit1.enemyHeight, true);
 	bandit1.enemyX = screenWidth*.5;
 	bandit1.enemyY = screenHeight*1.25;
-	
+
 
 	Bullet playerDagger;
 	playerDagger.bulletSprite = CreateSprite("./images/dagger.png", playerDagger.bulletWidth, playerDagger.bulletHeight, true);
 	playerDagger.bulletX = lyn.playerX;
 	playerDagger.bulletY = lyn.playerY + (playerDagger.bulletHeight*.5) + playerDagger.bulletHeight;
-
+	playerDagger.bulletTestY = 0;
 	GAMESTATE currentState = MAINMENU;
-    
-    do
-    {
-		
-		itoa(playerHealth, playerHealthString, 10);
-		
-		
-		
 
+	do
+	{
+		itoa(playerHealth, playerHealthString, 10);
 		switch (currentState)
 		{
 		case MAINMENU:
 
 			if (IsKeyDown('T'))
-				currentState = GAMESTART;
-
-
-
-
-
-
+				currentState = GAMEPLAY;
 
 			break;
 
 
-		case GAMESTART:
+		case GAMEPLAY:
+
 			stage1.backgroundYSpeed -= screenHeight*.01*GetDeltaTime();
-			
 			bandit1.enemyY -= screenHeight*.2*GetDeltaTime();
 			gameTime += GetDeltaTime();
-			lyn.playerUpperBoundary = lyn.playerY + lyn.playerHeight*.5;
-			lyn.playerLowerBoundary = lyn.playerY - lyn.playerHeight*.5;
-			lyn.playerRightBoundary = lyn.playerX + lyn.playerWidth*.25;
-			lyn.playerLeftBoundary = lyn.playerX - lyn.playerWidth*.25;
-			bandit1.enemyUpperBoundary = bandit1.enemyY + bandit1.enemyHeight*.5;
-			bandit1.enemyLowerBoundary = bandit1.enemyY - bandit1.enemyHeight*.5;
-			bandit1.enemyRightBoundary = bandit1.enemyX + bandit1.enemyWidth*.5;
-			bandit1.enemyLeftBoundary = bandit1.enemyX - bandit1.enemyWidth*.5;
+			lyn.Move();
 			DrawString(playerHealthString, screenWidth*.9, screenHeight*.5);
 			MoveSprite(stage1.stageSprite, screenWidth*.5, stage1.backgroundYSpeed);
 			DrawSprite(stage1.stageSprite);
@@ -139,44 +191,22 @@ int main( int argc, char* argv[] )
 			DrawSprite(lyn.playerSprite);
 			MoveSprite(bandit1.enemySprite, bandit1.enemyX, bandit1.enemyY);
 			DrawSprite(bandit1.enemySprite);
+			lyn.playerUpperBoundary = lyn.playerY + lyn.playerHeight*.5;
+			lyn.playerLowerBoundary = lyn.playerY - lyn.playerHeight*.5;
+			lyn.playerRightBoundary = lyn.playerX + lyn.playerWidth*.5;
+			lyn.playerLeftBoundary = lyn.playerX - lyn.playerWidth*.5;
+			bandit1.enemyUpperBoundary = bandit1.enemyY + bandit1.enemyHeight*.5;
+			bandit1.enemyLowerBoundary = bandit1.enemyY - bandit1.enemyHeight*.5;
+			bandit1.enemyRightBoundary = bandit1.enemyX + bandit1.enemyWidth*.5;
+			bandit1.enemyLeftBoundary = bandit1.enemyX - bandit1.enemyWidth*.5;
+			if (IsKeyDown(32))
+				bandit1.enemyY = screenHeight*1.25;
 
-			if (IsKeyDown('W'))
-			{
-				lyn.playerY += screenHeight*.5*GetDeltaTime();
-				if (lyn.playerY > screenHeight*.975)
-				{
-					lyn.playerY = screenHeight*.975;
-				}
-
-			}
-			if (IsKeyDown('S'))
-			{
-				lyn.playerY -= screenHeight*.5*GetDeltaTime();
-				if (lyn.playerY < screenHeight*.025)
-				{
-					lyn.playerY = screenHeight*.025;
-				}
-			}
-			if (IsKeyDown('A'))
-			{
-				lyn.playerX -= screenWidth*.5*GetDeltaTime();
-				if (lyn.playerX < screenWidth*.125 + lyn.playerWidth*.5)
-				{
-					lyn.playerX = screenWidth*.125 + lyn.playerWidth*.5;
-				}
-			}
-			if (IsKeyDown('D'))
-			{
-				lyn.playerX += screenWidth*.5*GetDeltaTime();
-				if (lyn.playerX > screenWidth*.875 - lyn.playerWidth*.5)
-				{
-					lyn.playerX = screenWidth*.875 - lyn.playerWidth*.5;
-				}
-			}
-			if (IsKeyDown('F'))
+			if (bool(IsKeyDown('F') == true));
 			{
 				MoveSprite(playerDagger.bulletSprite, playerDagger.bulletX, playerDagger.bulletY);
 				DrawSprite(playerDagger.bulletSprite);
+				playerDagger.bulletTestY += .01*GetDeltaTime();
 			}
 
 			// if the top part of the ship goes inside the enemy
@@ -187,7 +217,10 @@ int main( int argc, char* argv[] )
 					if (lyn.playerLeftBoundary < bandit1.enemyRightBoundary)
 					{
 						//playerHealth -= 1;
-						lyn.Collided();
+						if (lyn.playerLeftBoundary > bandit1.enemyLeftBoundary)
+						{
+							lyn.Collided();
+						}
 					}
 				}
 			}
@@ -195,23 +228,27 @@ int main( int argc, char* argv[] )
 			{//right side collision
 				if (lyn.playerUpperBoundary < bandit1.enemyUpperBoundary)
 				{
-					if (lyn.playerRightBoundary < bandit1.enemyLeftBoundary)
+					if (lyn.playerRightBoundary > bandit1.enemyLeftBoundary)
 					{
+						if (lyn.playerRightBoundary < bandit1.enemyRightBoundary)
+						{
 						lyn.Collided();
+						}
 					}
 				}
 			}
-
 			else if (lyn.playerLowerBoundary < bandit1.enemyUpperBoundary)
 			{//bottom side left side collision
 				if (lyn.playerLowerBoundary > bandit1.enemyLowerBoundary)
 				{
 					if (lyn.playerLeftBoundary < bandit1.enemyRightBoundary)
 					{
-						lyn.Collided();
+						if (lyn.playerLeftBoundary > bandit1.enemyLeftBoundary)
+						{
+							lyn.Collided();
+						}
 					}
 				}
-
 			}
 			else if (lyn.playerLowerBoundary < bandit1.enemyUpperBoundary)
 			{
@@ -219,25 +256,31 @@ int main( int argc, char* argv[] )
 				{
 					if (lyn.playerRightBoundary > bandit1.enemyLeftBoundary)
 					{
-						lyn.Collided();
+						if (lyn.playerRightBoundary < bandit1.enemyRightBoundary)
+						{
+							lyn.Collided();
+						}
 					}
 				}
-
 			}
 			if (playerHealth == 0)
 			{
 				currentState = GAMEOVER;
-				std::cout << "gameover dude";
-		case GAMEOVER:
-			DrawString(gameOverText, screenWidth*.45, screenHeight*.75);
-			break;
 			}
+			break;
+		case GAMEOVER:		
+			DrawString(gameOverText, screenWidth*.45, screenHeight*.75);
+			if (IsKeyDown(32))
+			{
+				currentState = GAMEPLAY;
+			}
+			break;
 		};
-        ClearScreen();
+		ClearScreen();
 
-    } while(!FrameworkUpdate());
+	} while (!FrameworkUpdate());
 
-    Shutdown();
+	Shutdown();
 
-    return 0;
+	return 0;
 }
