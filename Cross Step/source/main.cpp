@@ -2,13 +2,17 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <Windows.h>
 
 
-int screenWidth = 900;
-int screenHeight = 900;
+int screenWidth = 800;
+int screenHeight = 800;
 float GetDeltaTime();
 char gameTimeString[10];
 float gameTime = 0;
+float menuTime = 0;
+char menuText1[20] = "Cross Step";
+char menuText2[20] = "Press Start";
 unsigned int leftCap;
 unsigned int rightCap;
 unsigned int topCap;
@@ -22,6 +26,28 @@ char playerText[10] = "Player";
 char timeText[10] = "Time";
 char gameOverText[10] = "Game Over";
 char playerScoreText[10] = "Score";
+bool IsTimeToShow = true;
+void MenuFlash()
+{
+	menuTime += GetDeltaTime();
+	if (IsTimeToShow)
+	{
+		DrawString(menuText2, screenWidth*.4, screenHeight*.6);
+	}
+	if (menuTime <= 1.5)
+	{
+		IsTimeToShow = true;
+	}
+	if (menuTime >= 1.5)
+	{
+		IsTimeToShow = false;
+	}
+	if (menuTime >= 3)
+	{
+		menuTime = 0;
+	}
+	
+}
 void MovementCap(float objWidth, float objHeight)
 {
 	topCap = screenHeight - objHeight*.5;
@@ -39,15 +65,18 @@ enum GAMESTATE
 	GAMEOVER,
 };
 
+
 struct Background
 {
 	float backgroundY;
+	float backgroundY2;
 	unsigned int stageSprite;
+	unsigned int stageSprite2;
 };
-//bullet part of player since idk how to do complicated shiz
 class Bullet
 {
 public:
+
 	float bulletUpperBoundary;
 	float bulletLowerBoundary;
 	float bulletLeftBoundary;
@@ -57,44 +86,39 @@ public:
 	float bulletWidth = screenWidth*.01;
 	float bulletHeight = screenHeight*.02;
 	float bulletCount = 0;
-	int bulletSprite = -1;
 	
+	int bulletSprite = -1;
+	bool HitboxActive = true;
 	void Move()
 	{
-		// bounds
-		bulletUpperBoundary = bulletY + bulletHeight*.5;
-		bulletLowerBoundary = bulletY - bulletHeight*.5;
-		bulletRightBoundary = bulletX + bulletWidth*.5;
-		bulletLeftBoundary = bulletX - bulletWidth*.5;
-		
-		// movement
 		bulletY += (screenHeight*.2) * GetDeltaTime();
-		
-		// debug position
 		std::cout << bulletX << "," << bulletY << "";
-		
-		
 		if (bulletY > screenHeight)
 		{
 			bulletCount -= 1;
-			std::cout << "bulletsaredespawning";
-			
 		}
-
-
+		if (HitboxActive)
+		{// bounds
+			bulletUpperBoundary = bulletY + bulletHeight*.5;
+			bulletLowerBoundary = bulletY - bulletHeight*.5;
+			bulletRightBoundary = bulletX + bulletWidth*.5;
+			bulletLeftBoundary = bulletX - bulletWidth*.5;
+			// movement
+			// debug position
+		}
 	}
-
+	
 	void Draw()
 	{
 		std::cout << "ID" << bulletSprite << "\n";
 
 		if (bulletSprite != -1)
 		{
-		
 			MoveSprite(bulletSprite, bulletX, bulletY);
 			DrawSprite(bulletSprite);
 		}
 	}
+	
 
 
 };
@@ -104,27 +128,59 @@ struct Enemy
 	float enemyY;
 	float enemyWidth = screenWidth*.1;
 	float enemyHeight = screenHeight*.1;
-	unsigned int enemySprite;
-	typedef std::vector<unsigned int> Row;  //turning it into a vector or something
-	typedef std::vector<Row> Grid;
-
+	int enemySprite;
 	float enemyUpperBoundary;
 	float enemyLowerBoundary;
 	float enemyLeftBoundary;
 	float enemyRightBoundary;
 	float enemyHealth;
 	float timeToSpawn;
-	float enemyCount;
+	float enemyCount;	
+	bool IsDead = false;
+	bool IsDrawn = true;
+	
 
 	void Collided()
 	{
+		
 		enemyHealth -= 1;
-	std::cout << "enemy was hit";
-	player1HighScore += 1;
-		//if enemy health = 0
+		std::cout << "enemy was hit";
+		if (enemyHealth == 0)
+		{
+			player1HighScore += 1;
+			IsDead = true;
+			if (IsDead)
+			{
+				IsDrawn = false;
+				//remove boundaries
+			} 
+		}
 	}
 
+	void Draw()
+	{
+		if (IsDrawn)
+		{
+			DrawSprite(enemySprite);
+		}
+			
+	}
+	
 };
+Enemy bandit1[10];
+std::vector<Enemy> banditVector;
+
+
+// Create and move 10 enemies
+void Load()
+{
+	// Iterate over the array
+	for (int i = 0; i < 10; i++)
+	{
+		bandit1[i].enemySprite = CreateSprite("./images/enemy1.png", bandit1[i].enemyWidth, bandit1[i].enemyHeight, true);
+		
+	}
+}
 struct Player
 {
 public:
@@ -151,9 +207,10 @@ public:
 	float firingDelay = .25;
 	float firingKey;
 	
-	
-
 	Bullet bulletDagger;
+	std::vector<Bullet> myBullets;
+
+	bool IsDrawn = true;
 	void Collided()
 	{
 		if (timeWhenDamaged + invulTime < gameTime) //if it's been two seconds since the last collision starting from 0, the player takes damage once
@@ -165,26 +222,29 @@ public:
 	}
 	void Shoot()
 	{
-		if (IsKeyDown(firingKey))
+		if (IsDrawn)
 		{
-			if (bulletDagger.bulletCount < 3) //if less than 3 bullets on screen then it shoots
+			if (IsKeyDown(firingKey))
 			{
-				if (timeWhenShot + firingDelay < gameTime)
+				if (bulletDagger.bulletCount < 3) //if less than 3 bullets on screen then it shoots
 				{
-					// change the position of the bullet
-					bulletDagger.bulletSprite = CreateSprite("./images/dagger.png", bulletDagger.bulletWidth, bulletDagger.bulletHeight, true);
-					bulletDagger.bulletY = playerY + (playerHeight*.5) + bulletDagger.bulletHeight;
-					bulletDagger.bulletX = playerX;
-					timeWhenShot = gameTime;
-					bulletDagger.bulletCount += 1;
-					std::cout << "bullets are spawning";
+					if (timeWhenShot + firingDelay < gameTime)
+					{
+						// change the position of the bullet
+						{
+							bulletDagger.bulletSprite = CreateSprite("./images/dagger.png", bulletDagger.bulletWidth, bulletDagger.bulletHeight, true);
+							bulletDagger.bulletY = playerY + (playerHeight*.5) + bulletDagger.bulletHeight;
+							bulletDagger.bulletX = playerX;
+							timeWhenShot = gameTime;
+							bulletDagger.bulletCount += 1;
+						}
+					}
 				}
 			}
 		}
 	}
 	void Move()
 	{
-		
 		if (IsKeyDown(upKey))
 		{
 			playerY += screenHeight*.35*GetDeltaTime();
@@ -234,14 +294,16 @@ public:
 
 int main(int argc, char* argv[])
 {
-	Initialise(900, 900, false, "Cross Step");
+	Initialise(800, 800, false, "Cross Step");
 	SetBackgroundColour(SColour(0, 0, 0, 255));
-
-
+	Background titleScreen;
+	titleScreen.stageSprite = CreateSprite("./images/mainmenu.png", screenWidth*.75, screenHeight*1, true);
+	titleScreen.stageSprite2 = CreateSprite("./images/mainmenu.png", screenWidth*.75, screenHeight*1, true);
+	titleScreen.backgroundY = screenHeight*.5;
+	titleScreen.backgroundY2 = screenHeight*1.5;
 	Background stage1;
 	stage1.stageSprite = CreateSprite("./images/stage1background.png", screenWidth*.75, screenHeight * 4, true);
 	stage1.backgroundY = screenHeight*2;
-
 	Player lyn;
 	lyn.playerSprite = CreateSprite("./images/lyn.png", lyn.playerWidth, lyn.playerHeight, true);
 	lyn.playerX = screenWidth*.5;
@@ -251,26 +313,28 @@ int main(int argc, char* argv[])
 	lyn.downKey = 'S';
 	lyn.leftKey = 'A';
 	lyn.rightKey = 'D';
+	Load();
 	//set all my keys
 	
 
 	//second ship for coop if i have time to make
-	Player legault;
+	/*Player legault;
 	legault.playerSprite = CreateSprite("./images/legault.png", legault.playerWidth, legault.playerHeight, true);
 	legault.playerX = screenWidth*.75;
 	legault.playerY = screenHeight*.05;
 	legault.upKey = 'I';
 	legault.downKey = 'K';
 	legault.leftKey = 'J';
-	legault.rightKey = 'L';
+	legault.rightKey = 'L';*/
 
-	Enemy bandit1;
-	bandit1.enemySprite = CreateSprite("./images/enemy1.png", bandit1.enemyWidth, bandit1.enemyHeight, true);
-	bandit1.enemyX = screenWidth*.5;
-	bandit1.enemyY = screenHeight*.9;
-	bandit1.enemyHealth = 1;
-	bandit1.timeToSpawn = 15;
-	bandit1.enemyCount = 0;
+	
+
+	
+	//bandit1[i].enemyHealth = 1;
+	//bandit1[i].timeToSpawn = 15;
+	//bandit1[i].enemyCount = 0;
+	
+	
 	
 
 
@@ -283,9 +347,8 @@ int main(int argc, char* argv[])
 	{
 		std::fstream file;
 		file.open("./highscore.txt", std::ios_base::out);
-		file << player1HighScoreString << player2HighScoreString << std::endl;
+		file << player1HighScoreString << std::endl;
 		//highscores save to text doc incomplete
-
 		itoa(player1HighScore, player1HighScoreString, 10);
 		itoa(player2HighScore, player2HighScoreString, 10);
 		itoa(lyn.playerHealth, lyn.playerHealthString, 10);
@@ -294,10 +357,28 @@ int main(int argc, char* argv[])
 		switch (currentState)
 		{
 		case MAINMENU:
+			MoveSprite(titleScreen.stageSprite, screenWidth*.5, titleScreen.backgroundY);
+			DrawSprite(titleScreen.stageSprite);
+			MoveSprite(titleScreen.stageSprite2, screenWidth*.5, titleScreen.backgroundY2);
+			DrawSprite(titleScreen.stageSprite2);
+			titleScreen.backgroundY -= GetDeltaTime()*screenHeight*.2;
+			titleScreen.backgroundY2 -= GetDeltaTime()*screenHeight*.2;
+			if (titleScreen.backgroundY <= screenHeight*-.5)
+			{
+				titleScreen.backgroundY = screenHeight*1.5;
+			}
+			if (titleScreen.backgroundY2 <= screenHeight*-.5)
+			{
+				titleScreen.backgroundY2 = screenHeight*1.5;
+			}
+
+
+			MenuFlash();
+			DrawString(menuText1, screenWidth*.4, screenHeight*.8);
+			std::cout << menuTime << "\n";
 
 			if (IsKeyDown('T'))
 				currentState = GAMEPLAY;
-
 			break;
 
 
@@ -311,12 +392,22 @@ int main(int argc, char* argv[])
 			MoveSprite(lyn.playerSprite, lyn.playerX, lyn.playerY);
 			DrawSprite(lyn.playerSprite);
 			stage1.backgroundY -= screenHeight*.05*GetDeltaTime();
-			bandit1.enemyY -= screenHeight*.02*GetDeltaTime();
+			
 			//Calling move function for my ship
 			lyn.Move();
 			lyn.Shoot();
 			lyn.bulletDagger.Move();
 			lyn.bulletDagger.Draw();
+			for (int i = 0; i < 10; i++)
+			{
+				MoveSprite(bandit1[i].enemySprite, bandit1[i].enemyX, bandit1[i].enemyY);
+				bandit1[i].Draw();
+				bandit1[i].enemyY -= screenHeight*.02*GetDeltaTime();
+				bandit1[i].enemyX = screenWidth*.5;
+				bandit1[i].enemyY = screenHeight*.9;
+				bandit1[i].enemyHealth = 1;
+			}
+			
 			//Drawing sprites and their location
 			DrawString(lyn.playerHealthString, screenWidth*.9, screenHeight*.5);
 			DrawString(gameTimeString, screenWidth*.9, screenHeight*.8);
@@ -325,153 +416,156 @@ int main(int argc, char* argv[])
 			DrawString(timeText, screenWidth*.9, screenHeight*.9);
 			DrawString(player1HighScoreString, screenWidth*.025, screenHeight*.8);
 			DrawString(playerScoreText, screenWidth*.025, screenHeight*.9);
-			
+
 			/*DrawString(lyn.timeWhenDamagedString, screenWidth*.9, screenHeight*.9);*/  //delete this to view the time when last damaged
-			
-			
 
 
-			bandit1.timeToSpawn -= GetDeltaTime();
+
+
+
 			/*if (bandit1.timeToSpawn = 0)
 			{
-				while (bandit1.enemyCount < 5)
-				{
-					MoveSprite(bandit1.enemySprite, bandit1.enemyX, bandit1.enemyY);
-					DrawSprite(bandit1.enemySprite);
-					bandit1.timeToSpawn += 15;
-				}
-				
-			}*/
+			while (bandit1.enemyCount < 5)
+			{
 			MoveSprite(bandit1.enemySprite, bandit1.enemyX, bandit1.enemyY);
 			DrawSprite(bandit1.enemySprite);
+			bandit1.timeToSpawn += 15;
+			}
+
+			}*/
+
+
+
+
 			//Boundaries
 			lyn.playerUpperBoundary = lyn.playerY + lyn.playerHeight*.5;
 			lyn.playerLowerBoundary = lyn.playerY - lyn.playerHeight*.5;
 			lyn.playerRightBoundary = lyn.playerX + lyn.playerWidth*.5;
 			lyn.playerLeftBoundary = lyn.playerX - lyn.playerWidth*.5;
-			
-			bandit1.enemyUpperBoundary = bandit1.enemyY + bandit1.enemyHeight*.5;
-			bandit1.enemyLowerBoundary = bandit1.enemyY - bandit1.enemyHeight*.5;
-			bandit1.enemyRightBoundary = bandit1.enemyX + bandit1.enemyWidth*.5;
-			bandit1.enemyLeftBoundary = bandit1.enemyX - bandit1.enemyWidth*.5;
-			
-			
-			//shit to speed up my game for testing
-			if (IsKeyDown('I'))
-			{
-			}
-			if (IsKeyDown(32))
-				bandit1.enemyY = screenHeight*.5;
 
-			if (lyn.playerUpperBoundary > bandit1.enemyLowerBoundary)
-			{//right side top corner collision
-				if (lyn.playerUpperBoundary < bandit1.enemyUpperBoundary)
-				{
-					if (lyn.playerRightBoundary > bandit1.enemyLeftBoundary)
+			for (int i = 0; i < 10; i++)
+			{
+				bandit1[i].enemyUpperBoundary = bandit1[i].enemyY + bandit1[i].enemyHeight*.5;
+				bandit1[i].enemyLowerBoundary = bandit1[i].enemyY - bandit1[i].enemyHeight*.5;
+				bandit1[i].enemyRightBoundary = bandit1[i].enemyX + bandit1[i].enemyWidth*.5;
+				bandit1[i].enemyLeftBoundary = bandit1[i].enemyX - bandit1[i].enemyWidth*.5;
+
+
+				//shit to speed up my game for testing
+
+
+
+				if (lyn.playerUpperBoundary > bandit1[i].enemyLowerBoundary)
+				{//right side top corner collision
+					if (lyn.playerUpperBoundary < bandit1[i].enemyUpperBoundary)
 					{
-						if (lyn.playerRightBoundary < bandit1.enemyRightBoundary)
+						if (lyn.playerRightBoundary > bandit1[i].enemyLeftBoundary)
 						{
-							lyn.Collided();
+							if (lyn.playerRightBoundary < bandit1[i].enemyRightBoundary)
+							{
+								lyn.Collided();
+							}
 						}
 					}
 				}
-			}
-			// if the top part of the ship goes inside the enemy
-			if (lyn.playerUpperBoundary > bandit1.enemyLowerBoundary)
-			{//collission detection for top left corner of shipsprite
-				if (lyn.playerUpperBoundary < bandit1.enemyUpperBoundary)
-				{
-					if (lyn.playerLeftBoundary < bandit1.enemyRightBoundary)
+				// if the top part of the ship goes inside the enemy
+				if (lyn.playerUpperBoundary > bandit1[i].enemyLowerBoundary)
+				{//collission detection for top left corner of shipsprite
+					if (lyn.playerUpperBoundary < bandit1[i].enemyUpperBoundary)
 					{
-						//playerHealth -= 1;
-						if (lyn.playerLeftBoundary > bandit1.enemyLeftBoundary)
+						if (lyn.playerLeftBoundary < bandit1[i].enemyRightBoundary)
 						{
-							lyn.Collided();
+							//playerHealth -= 1;
+							if (lyn.playerLeftBoundary > bandit1[i].enemyLeftBoundary)
+							{
+								lyn.Collided();
+							}
 						}
 					}
 				}
-			}
+
+				if (lyn.playerLowerBoundary < bandit1[i].enemyUpperBoundary)
+				{//bottom side left side collision
+					if (lyn.playerLowerBoundary > bandit1[i].enemyLowerBoundary)
+					{
+						if (lyn.playerLeftBoundary < bandit1[i].enemyRightBoundary)
+						{
+							if (lyn.playerLeftBoundary > bandit1[i].enemyLeftBoundary)
+							{
+								lyn.Collided();
+							}
+						}
+					}
+				}
+				if (lyn.playerLowerBoundary < bandit1[i].enemyUpperBoundary)
+				{
+					if (lyn.playerLowerBoundary > bandit1[i].enemyLowerBoundary)
+					{
+						if (lyn.playerRightBoundary > bandit1[i].enemyLeftBoundary)
+						{
+							if (lyn.playerRightBoundary < bandit1[i].enemyRightBoundary)
+							{
+								lyn.Collided();
+							}
+						}
+					}
+				}
+				//top left side collision for bullet into enemy (I reversed the order unintentionally! SORRY!)
+
+				if (bandit1[i].enemyLowerBoundary < lyn.bulletDagger.bulletUpperBoundary)
+				{
+					if (bandit1[i].enemyUpperBoundary > lyn.bulletDagger.bulletUpperBoundary)
+					{
+						if (bandit1[i].enemyRightBoundary > lyn.bulletDagger.bulletLeftBoundary)
+						{
+							if (bandit1[i].enemyLeftBoundary < lyn.bulletDagger.bulletLeftBoundary)
+							{
+								bandit1[i].Collided();
+							}
+						}
+					}
+				}
+				//top right side collision for bullet into enemy
+				if (bandit1[i].enemyLowerBoundary < lyn.bulletDagger.bulletUpperBoundary)
+				{
+					if (bandit1[i].enemyUpperBoundary > lyn.bulletDagger.bulletUpperBoundary)
+					{
+						if (bandit1[i].enemyRightBoundary > lyn.bulletDagger.bulletRightBoundary)
+						{
+							if (bandit1[i].enemyLeftBoundary < lyn.bulletDagger.bulletRightBoundary)
+							{
+								bandit1[i].Collided();
+							}
+						}
+					}
+				}
+				if (bandit1[i].enemyLowerBoundary < lyn.bulletDagger.bulletLowerBoundary)
+				{
+					if (bandit1[i].enemyUpperBoundary > lyn.bulletDagger.bulletLowerBoundary)
+					{
+						if (bandit1[i].enemyRightBoundary > lyn.bulletDagger.bulletLeftBoundary)
+						{
+							if (bandit1[i].enemyLeftBoundary < lyn.bulletDagger.bulletLeftBoundary)
+							{
+								bandit1[i].Collided();
+							}
+						}
+					}
+				}
+				if (bandit1[i].enemyLowerBoundary < lyn.bulletDagger.bulletLowerBoundary)
+				{
+					if (bandit1[i].enemyUpperBoundary > lyn.bulletDagger.bulletLowerBoundary)
+					{
+						if (bandit1[i].enemyRightBoundary > lyn.bulletDagger.bulletRightBoundary)
+						{
+							if (bandit1[i].enemyLeftBoundary < lyn.bulletDagger.bulletRightBoundary)
+							{
+								bandit1[i].Collided();
+							}
+						}
+					}
+				}
 			
-			if (lyn.playerLowerBoundary < bandit1.enemyUpperBoundary)
-			{//bottom side left side collision
-				if (lyn.playerLowerBoundary > bandit1.enemyLowerBoundary)
-				{
-					if (lyn.playerLeftBoundary < bandit1.enemyRightBoundary)
-					{
-						if (lyn.playerLeftBoundary > bandit1.enemyLeftBoundary)
-						{
-							lyn.Collided();
-						}
-					}
-				}
-			}
-			if (lyn.playerLowerBoundary < bandit1.enemyUpperBoundary)
-			{
-				if (lyn.playerLowerBoundary > bandit1.enemyLowerBoundary)
-				{
-					if (lyn.playerRightBoundary > bandit1.enemyLeftBoundary)
-					{
-						if (lyn.playerRightBoundary < bandit1.enemyRightBoundary)
-						{
-							lyn.Collided();
-						}
-					}
-				}
-			}
-			//top left side collision for bullet into enemy (I reversed the order unintentionally! SORRY!)
-			if (bandit1.enemyLowerBoundary < lyn.bulletDagger.bulletUpperBoundary)
-			{
-				if (bandit1.enemyUpperBoundary > lyn.bulletDagger.bulletUpperBoundary)
-				{
-					if (bandit1.enemyRightBoundary > lyn.bulletDagger.bulletLeftBoundary)
-					{
-						if (bandit1.enemyLeftBoundary < lyn.bulletDagger.bulletLeftBoundary)
-						{
-							bandit1.Collided();
-						}
-					}
-				}
-			}
-			//top right side collision for bullet into enemy
-			if (bandit1.enemyLowerBoundary < lyn.bulletDagger.bulletUpperBoundary)
-			{
-				if (bandit1.enemyUpperBoundary > lyn.bulletDagger.bulletUpperBoundary)
-				{
-					if (bandit1.enemyRightBoundary > lyn.bulletDagger.bulletRightBoundary)
-					{
-						if (bandit1.enemyLeftBoundary < lyn.bulletDagger.bulletRightBoundary)
-						{
-							bandit1.Collided();
-						}
-					}
-				}
-			}
-			if (bandit1.enemyLowerBoundary < lyn.bulletDagger.bulletLowerBoundary)
-			{
-				if (bandit1.enemyUpperBoundary > lyn.bulletDagger.bulletLowerBoundary)
-				{
-					if (bandit1.enemyRightBoundary > lyn.bulletDagger.bulletLeftBoundary)
-					{
-						if (bandit1.enemyLeftBoundary < lyn.bulletDagger.bulletLeftBoundary)
-						{
-							bandit1.Collided();
-						}
-					}
-				}
-			}
-			if (bandit1.enemyLowerBoundary < lyn.bulletDagger.bulletLowerBoundary)
-			{
-				if (bandit1.enemyUpperBoundary > lyn.bulletDagger.bulletLowerBoundary)
-				{
-					if (bandit1.enemyRightBoundary > lyn.bulletDagger.bulletRightBoundary)
-					{
-						if (bandit1.enemyLeftBoundary < lyn.bulletDagger.bulletRightBoundary)
-						{
-							bandit1.Collided();
-						}
-					}
-				}
-			}
 			if (lyn.playerHealth == 0)
 			{
 				currentState = GAMEOVER;
@@ -499,8 +593,9 @@ int main(int argc, char* argv[])
 		};
 		ClearScreen();
 
-	} while (!FrameworkUpdate());
-
+	}
+	while (!FrameworkUpdate());
+	
 	Shutdown();
 
 	return 0;
