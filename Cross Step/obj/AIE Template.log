@@ -1,75 +1,90 @@
-﻿Build started 10/5/2014 7:03:21 PM.
+﻿Build started 10/19/2014 4:51:09 PM.
      1>Project "C:\Users\Bryce\Documents\Cross-Step\Cross Step\AIE Template.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./ /I./include/ /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\\" /Fd"obj\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt source\main.cpp
          main.cpp
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(18): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(19): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(20): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(21): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(42): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(43): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(63): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(64): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(77): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(78): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(92): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(100): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(103): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(118): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(121): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(126): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(129): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(134): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(137): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(142): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(145): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(178): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(179): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(182): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(183): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(184): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(192): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(194): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(199): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(200): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(201): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(208): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(209): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(210): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(221): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(222): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(222): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(223): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(223): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(239): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(240): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(245): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(246): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(247): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(248): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(250): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(257): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(258): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(259): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(260): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(261): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(262): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(263): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(264): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(265): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(266): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(267): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(35): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(53): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(54): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(55): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(56): warning C4244: '=' : conversion from 'double' to 'unsigned int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(86): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(87): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(94): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(102): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(103): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(104): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(105): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(129): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(130): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(185): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(186): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(187): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(190): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(209): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(210): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(242): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(250): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(251): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(265): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(268): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(273): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(276): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(339): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(344): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(348): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(351): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(352): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(281): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(284): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(289): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(292): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(315): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(316): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(317): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(318): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(320): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(321): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(323): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(324): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(325): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(367): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(368): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(369): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(370): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(370): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(371): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(371): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _itoa. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdlib.h(937) : see declaration of 'itoa'
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(375): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(377): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(380): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(383): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(384): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(387): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(391): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(405): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(418): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(424): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(425): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(426): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(427): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(428): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(429): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(430): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(453): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(454): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(455): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(456): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(461): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(466): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(467): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(468): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(469): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(594): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(600): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(604): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(607): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\bryce\documents\cross-step\cross step\source\main.cpp(608): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\AIE Template_d.exe" /INCREMENTAL /NOLOGO /LIBPATH:./libs AIE_1st_Year_Framework_d.lib kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"bin\AIE Template_d.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"bin\AIE Template_d.lib" /MACHINE:X86 obj\main.obj
          AIE_1st_Year_Framework_d.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
@@ -105,4 +120,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.44
+Time Elapsed 00:00:02.02
